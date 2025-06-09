@@ -34,6 +34,18 @@ int main() {
 
   // Main loop
 
+  bool running = true;
+  SDL_Event event;
+  while (running) {
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_EVENT_QUIT) {
+        running = false;
+      }
+    }
+    // Optionally, add rendering code here
+    SDL_Delay(8);
+  }
+
   SDL_Delay(3000);
   SDL_DestroyWindow(window.get());
   SDL_Quit();
