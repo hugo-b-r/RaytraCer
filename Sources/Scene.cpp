@@ -18,7 +18,7 @@ int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
     Vector3 ML = this->lumiere - OM;
     Vector3 l = ML.unit();
     Vector3 n = (OM - this->objets[0].center).unit();
-    Color color = this->objets[0].color;
+    Color color = this->objets[0].color * std::max(n.dot(l), (double)0);
     return SDL_MapRGB(&format, NULL, color.getRed(), color.getGreen(),
                       color.getBlue());
   } else {

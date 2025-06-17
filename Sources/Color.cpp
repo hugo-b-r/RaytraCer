@@ -24,5 +24,5 @@ int Color::getGreen() { return this->green; }
 int Color::getBlue() { return this->blue; }
 
 Color Color::operator*(double t) {
-  return Color((int)t * this->red, (int)t * this->green, (int)t * this->blue);
+  return Color(t * this->red, t * this->green, t * this->blue);
 }
