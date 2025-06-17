@@ -1,4 +1,7 @@
-#pragma once
+#ifndef VECTOR3_H
+
+#define VECTOR3_H
+
 
 class Vector3 {
  public:
@@ -26,5 +29,8 @@ class Vector3 {
   double length();
   Vector3 unit();
 
+  
   Vector3 reflection(Vector3 normal);
 };
+
+#endif  // VECTOR3_H

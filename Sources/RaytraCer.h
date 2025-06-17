@@ -7,8 +7,8 @@
 
 #define SDL_MAIN_HANDLED
 
-#define WINDOW_WIDTH 2000
-#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 500
 
 // TODO: Référencez ici les en-têtes supplémentaires nécessaires à votre
 // programme.

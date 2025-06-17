@@ -1,8 +1,10 @@
-#include "Vector3.h"
-#pragma once
+#ifndef RAY_H
 
-#include "Objects.h"
+#define RAY_H
+
+
 #include "Vector3.h"
+#include "Objects.h"
 
 class Ray {
  public:
@@ -15,3 +17,5 @@ class Ray {
 
   double intersect_with(Sphere s);
 };
+
+#endif  // RAY_H

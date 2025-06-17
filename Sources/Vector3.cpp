@@ -57,8 +57,9 @@ double Vector3::length_squared() { return x * x + y * y + z * z; }
 
 double Vector3::length() { return sqrt(this->length_squared()); }
 
-Vector3 Vector3::unit() { return *this / this->length(); }
+Vector3 Vector3::unit() { return (*this / this->length()); }
 
 Vector3 Vector3::reflection(Vector3 normal) {
   return *this - normal * 2 * (this->dot(normal));
 }
+
