@@ -6,10 +6,10 @@ Vector3 Sphere::normal(Vector3 point) {
   return (point - this->center).unit();
 }
 
-Sphere::Sphere(Vector3 center, double radius) {
+Sphere::Sphere(Vector3 center, double radius, Color color) {
   this->center = center;
   this->radius = radius;
-  this->color = Color(0, 255, 0);
+  this->color = color;
 }
 
 Screen::Screen() {

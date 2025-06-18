@@ -8,7 +8,7 @@
 
 class Sphere {
  public:
-  Sphere(Vector3 center, double radius);
+  Sphere(Vector3 center, double radius, Color color);
 
   Vector3 center;
   Color color;
