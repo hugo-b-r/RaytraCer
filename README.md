@@ -8,7 +8,7 @@ RaytraCer is a raytracer written in C++ as the name does not suggests.
  ```bash
  git clone https://github.com/libsdl-org/SDL vendored/SDL
  ```
- You can set-up th ebuild folder using
+ You can set-up the build folder using
  ```bash
  cmake -S . -B .\build\
  ```
