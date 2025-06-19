@@ -11,6 +11,14 @@ Scene::Scene() {
   this->screen = Screen();
 }
 
+Scene::Scene(int w, int h) {
+  this->lumiere = Vector3(45, -50, -40);
+  this->objets = {Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
+                  Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
+                  Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
+  this->screen = Screen(w, h, Vector3(0, 0, 1000));
+}
+
 
 int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
   Vector3 u = this->screen.pixelDirectionFromOrigin(x, y).unit();

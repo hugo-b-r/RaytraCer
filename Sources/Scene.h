@@ -10,6 +10,7 @@
 class Scene {
  public:
   Scene();
+  Scene::Scene(int w, int h);
 
 
   std::vector<Sphere> objets;

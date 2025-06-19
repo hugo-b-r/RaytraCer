@@ -21,6 +21,6 @@ add_subdirectory(vendored/SDL EXCLUDE_FROM_ALL)
 
 #find_package(sdl2 CONFIG REQUIRED)
 
-add_executable(raytracer "Sources/RaytraCer.cpp" "Sources/RaytraCer.h" "Sources/Vector2.h" "Sources/Vector2.cpp" "Sources/Vector3.cpp" "Sources/Vector3.h" "Sources/Ray.h" "Sources/Ray.cpp" "Sources/Color.h" "Sources/Color.cpp" "Sources/Objects.h" "Sources/Objects.cpp" "Sources/Image.h" "Sources/Image.cpp"   "Sources/Scene.cpp" "Sources/Scene.h" "Sources/Utilities.h")
+add_executable(raytracer "Sources/RaytraCer.cpp" "Sources/RaytraCer.h" "Sources/Vector2.h" "Sources/Vector2.cpp" "Sources/Vector3.cpp" "Sources/Vector3.h" "Sources/Ray.h" "Sources/Ray.cpp" "Sources/Color.h" "Sources/Color.cpp" "Sources/Objects.h" "Sources/Objects.cpp"     "Sources/Scene.cpp" "Sources/Scene.h" "Sources/Utilities.h" "Sources/RealWindow.h" "Sources/RealWindow.cpp" "Sources/Utilities.cpp")
 
 target_link_libraries(raytracer PRIVATE SDL3::SDL3)

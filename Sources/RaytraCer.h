@@ -4,11 +4,20 @@
 #pragma once
 
 #include <iostream>
+#include "Scene.h"
+#include "RealWindow.h"
+
 
 #define SDL_MAIN_HANDLED
 
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 500
+class RaytraCer {
+ public:
+  RaytraCer();
+  void render();
+  RealWindow window;
+  Scene scene;
+
+};
 
 // TODO: Référencez ici les en-têtes supplémentaires nécessaires à votre
 // programme.
