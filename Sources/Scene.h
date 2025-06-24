@@ -13,7 +13,7 @@ class Scene {
   Scene::Scene(int w, int h);
 
 
-  std::vector<Sphere> objets;
+  std::vector<Object3D*> objets;
   Screen screen;
   Vector3 lumiere;
 

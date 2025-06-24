@@ -5,12 +5,23 @@
 #include "Vector3.h"
 #include "Color.h"
 
+#include <variant>
 
-class Sphere {
+
+class Object3D {
+
+public:
+  Vector3 center;
+
+  Object3D::Object3D();
+  Object3D::Object3D(Vector3 center);
+};
+
+
+class Sphere : public Object3D {
  public:
   Sphere(Vector3 center, double radius, Color color);
 
-  Vector3 center;
   Color color;
   double radius;
 
@@ -19,7 +30,7 @@ class Sphere {
  private:
 };
 
-class Screen {
+class Screen : public Object3D {
  public:
   Screen::Screen();
   Screen::Screen(int width, int height, Vector3 pos);
@@ -30,11 +41,21 @@ class Screen {
 
   Vector3 pixelDirectionFromOrigin(int x, int y);
 
-  
  private:
   int width;
   int height;
-  Vector3 pos;
 };
+
+class Plane : public Object3D {
+	public: 
+		Plane::Plane();
+        Plane::Plane(Vector3 normal, Vector3 center, Color color);
+        Vector3 normal;
+        Color color;   
+};
+
+
+
+using Object = std::variant<Sphere, Plane>;
 
 #endif  // OBJECTS_H

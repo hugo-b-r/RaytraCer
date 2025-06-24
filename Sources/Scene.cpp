@@ -2,20 +2,23 @@
 #include "Ray.h"
 #include <iostream>
 
+#include <variant>
+
+
 
 Scene::Scene() {
   this->lumiere = Vector3(45, -50, -40);
-  this->objets = {Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
-                  Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
-                  Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
+  this->objets = {&Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
+                  &Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
+                  &Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
   this->screen = Screen();
 }
 
 Scene::Scene(int w, int h) {
   this->lumiere = Vector3(45, -50, -40);
-  this->objets = {Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
-                  Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
-                  Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
+  this->objets = {&Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
+                  &Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
+                  &Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
   this->screen = Screen(w, h, Vector3(0, 0, 1000));
 }
 
@@ -33,13 +36,14 @@ int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
       t_obj = i;
     }
   }
-  Sphere drawn_sphere = this->objets[t_obj]; 
+  Object drawn_sphere = this->objets[t_obj]; 
   if (t != 0) {
     Vector3 OM = u * t;
     Vector3 ML = this->lumiere - OM;
     Vector3 l = ML.unit();
-    Vector3 n = (OM - this->objets[t_obj].center).unit();
-    Color color = this->objets[t_obj].color * std::max(n.dot(l), (double)0);
+    Vector3 n = (OM - this->objets[t_obj]->center).unit();
+    Color color = this->objets[t_obj]->color * std::max(n.dot(l), (double)0);    
+    
     for (int i = 0; i < this->objets.size(); i++) {
       if (Ray(OM, l).intersect_with(this->objets[i]) != 0 &&
           i != t_obj) {
