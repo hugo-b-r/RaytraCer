@@ -12,17 +12,20 @@ Color::Color(int red, int green, int blue) {
   this->blue = blue;
 }
 
+Color::Color(uint8_t red, uint8_t green, uint8_t blue)
+    : red(red), blue(blue), green(green) {}
+
 void Color::setRed(int red) { this->red = red; }
 
 void Color::setGreen(int green) { this->green = green; }
 void Color::setBlue(int blue) { this->blue = blue; }
 
-int Color::getRed() { return this->red; }
+int Color::getRed() const { return this->red; }
 
-int Color::getGreen() { return this->green; }
+int Color::getGreen() const { return this->green; }
 
-int Color::getBlue() { return this->blue; }
+int Color::getBlue() const { return this->blue; }
 
 Color Color::operator*(double t) {
-  return Color((int)t * this->red, (int) t * this->green, (int) t * this->blue);
+  return Color((int) (t * this->red), (int) (t * this->green), (int) (t * this->blue));
 }
