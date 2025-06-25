@@ -1,27 +1,32 @@
 #include "Scene.h"
-#include "Ray.h"
-#include <iostream>
 
+#include <iostream>
 #include <variant>
 
-
+#include "Ray.h"
 
 Scene::Scene() {
   this->lumiere = Vector3(45, -50, -40);
-  this->objets = {&Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
-                  &Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
-                  &Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
+  this->objets = {
+      std::make_shared<Sphere>(Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0))),
+      std::make_shared<Sphere>(
+          Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255))),
+      std::make_shared<Sphere>(
+          Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0)))};
+
   this->screen = Screen();
 }
 
 Scene::Scene(int w, int h) {
   this->lumiere = Vector3(45, -50, -40);
-  this->objets = {&Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0)),
-                  &Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255)),
-                  &Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))};
+  this->objets = {
+      std::make_shared<Sphere>(Sphere(Vector3(2, 0, 7), 1.0, Color(0, 255, 0))),
+      std::make_shared<Sphere>(
+          Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255))),
+      std::make_shared<Sphere>(
+          Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0)))};
   this->screen = Screen(w, h, Vector3(0, 0, 1000));
 }
-
 
 int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
   Vector3 u = this->screen.pixelDirectionFromOrigin(x, y).unit();
@@ -30,24 +35,24 @@ int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
   double intersec = 0;
   for (int i = 0; i < this->objets.size(); i++) {
     Ray r = Ray(Vector3(0, 0, 0), u);
-    intersec = r.intersect_with(this->objets[i]);
+
+    intersec = this->objets[i].get()->make_intersect(&r);
     if ((intersec != 0 && intersec < t) || (intersec != 0 && t == 0)) {
       t = intersec;
       t_obj = i;
     }
   }
-  Object drawn_sphere = this->objets[t_obj]; 
+  HittableObject3D* drawn_sphere = this->objets[t_obj].get();
   if (t != 0) {
     Vector3 OM = u * t;
     Vector3 ML = this->lumiere - OM;
     Vector3 l = ML.unit();
     Vector3 n = (OM - this->objets[t_obj]->center).unit();
-    Color color = this->objets[t_obj]->color * std::max(n.dot(l), (double)0);    
-    
+    Color color = this->objets[t_obj]->color * std::max(n.dot(l), (double)0);
+
     for (int i = 0; i < this->objets.size(); i++) {
-      if (Ray(OM, l).intersect_with(this->objets[i]) != 0 &&
-          i != t_obj) {
-        color = Color(50, 50 ,50);
+      if (this->objets[i]->make_intersect(&Ray(OM, l)) != 0 && i != t_obj) {
+        color = Color(50, 50, 50);
       }
     }
     return SDL_MapRGB(&format, NULL, color.getRed(), color.getGreen(),
@@ -67,4 +72,3 @@ std::vector<int> Scene::coloration(SDL_PixelFormatDetails format) {
   }
   return image;
 }
-
