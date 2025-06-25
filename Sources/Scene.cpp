@@ -24,7 +24,10 @@ Scene::Scene(int w, int h) {
       std::make_shared<Sphere>(
           Sphere(Vector3(-2, 0, 7), 1.0, Color(0, 0, 255))),
       std::make_shared<Sphere>(
-          Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0)))};
+          Sphere(Vector3(0, 0, 10), 2.0, Color(255, 0, 0))),
+      std::make_shared<Plane>(
+          Plane(Vector3(0, -1, 0), Vector3(0, 2, 0), Color(0, 255, 0))),
+  };
   this->screen = Screen(w, h, Vector3(0, 0, 1000));
 }
 
@@ -42,16 +45,17 @@ int Scene::pixel_color(int x, int y, SDL_PixelFormatDetails format) {
       t_obj = i;
     }
   }
-  HittableObject3D* drawn_sphere = this->objets[t_obj].get();
   if (t != 0) {
     Vector3 OM = u * t;
     Vector3 ML = this->lumiere - OM;
     Vector3 l = ML.unit();
-    Vector3 n = (OM - this->objets[t_obj]->center).unit();
-    Color color = this->objets[t_obj]->color * std::max(n.dot(l), (double)0);
+    Vector3 n = this->objets[t_obj]->normal(OM);
+    Color color =
+        this->objets[t_obj].get()->color * std::max(n.dot(l), (double)0);
 
     for (int i = 0; i < this->objets.size(); i++) {
-      if (this->objets[i]->make_intersect(&Ray(OM, l)) != 0 && i != t_obj) {
+      if (this->objets[i].get()->make_intersect(&Ray(OM, l)) != 0 &&
+          i != t_obj) {
         color = Color(50, 50, 50);
       }
     }
