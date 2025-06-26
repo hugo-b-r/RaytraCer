@@ -6,6 +6,24 @@ Object3D::Object3D() : center(Vector3(0, 0, 0)) {}
 
 Object3D::Object3D(Vector3 center) : center(center) {}
 
+Screen::Screen() : Object3D(Vector3(0, 0, 500)), width(1000), height(500) {}
+
+Screen::Screen(int width, int height, Vector3 pos)
+    : width(width), height(height), Object3D(pos) {}
+
+int Screen::getWidth() { return this->width; }
+
+int Screen::getHeight() { return this->height; }
+
+Vector3 Screen::getPos() { return this->center; }
+
+Vector3 Screen::pixelDirectionFromOrigin(int x,
+                                         int y) {  // a free directionnal vector
+  return Vector3((double)x - (double)(this->width) / (double)2,
+                 (double)y - (double)(this->height) / (double)2, (double)0) +
+         this->center;
+}
+
 double HittableObject3D::make_intersect(Ray *ray) { return 0; }
 Vector3 HittableObject3D::normal(Vector3 point) { return Vector3(1, 0, 0); }
 HittableObject3D::HittableObject3D(Vector3 center) : Object3D(center) {}
@@ -21,8 +39,9 @@ Sphere::Sphere(Vector3 center, double radius, Color color)
 double Sphere::make_intersect(Ray *ray) {
   Vector3 u = ray->direction;
   double a = 1;
-  double b = (this->center).dot(u) * -2;
-  double c = this->center.length() * this->center.length() -
+  double b = (this->center - ray->start).dot(u) * -2;
+  double c = (this->center - ray->start).length() *
+                 (this->center - ray->start).length() -
              this->radius * this->radius;
   double delta = b * b - 4 * a * c;
   if (delta == 0) {
@@ -44,24 +63,6 @@ double Sphere::make_intersect(Ray *ray) {
 }
 
 Vector3 Sphere::normal(Vector3 point) { return (point - this->center).unit(); }
-
-Screen::Screen() : Object3D(Vector3(0, 0, 1000)), width(2000), height(1000) {}
-
-Screen::Screen(int width, int height, Vector3 pos)
-    : width(width), height(height), Object3D(pos) {}
-
-int Screen::getWidth() { return this->width; }
-
-int Screen::getHeight() { return this->height; }
-
-Vector3 Screen::getPos() { return this->center; }
-
-Vector3 Screen::pixelDirectionFromOrigin(int x,
-                                         int y) {  // a free directionnal vector
-  return Vector3((double)x - (double)(this->width) / (double)2,
-                 (double)y - (double)(this->height) / (double)2, (double)0) +
-         this->center;
-}
 
 Plane::Plane()
     : norm(Vector3(0, 0, 1)),

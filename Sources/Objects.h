@@ -16,6 +16,22 @@ class Object3D {
   Object3D::Object3D(Vector3 center);
 };
 
+class Screen : public Object3D {
+ public:
+  Screen::Screen();
+  Screen::Screen(int width, int height, Vector3 pos);
+
+  int getWidth();
+  int getHeight();
+  Vector3 getPos();
+
+  Vector3 pixelDirectionFromOrigin(int x, int y);
+
+ private:
+  int width;
+  int height;
+};
+
 class HittableObject3D : public Object3D {
  public:
   virtual double make_intersect(Ray *ray);
@@ -34,22 +50,6 @@ class Sphere : public HittableObject3D {
 
   Vector3 normal(Vector3 point) override;
   double make_intersect(Ray *ray) override;
-};
-
-class Screen : public Object3D {
- public:
-  Screen::Screen();
-  Screen::Screen(int width, int height, Vector3 pos);
-
-  int getWidth();
-  int getHeight();
-  Vector3 getPos();
-
-  Vector3 pixelDirectionFromOrigin(int x, int y);
-
- private:
-  int width;
-  int height;
 };
 
 class Plane : public HittableObject3D {
