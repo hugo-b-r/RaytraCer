@@ -6,6 +6,7 @@
 #include <vector>
 #include "Scene.h"
 #include <SDL3/SDL.h>
+#include <memory>
 
 class Scene {
  public:
@@ -13,7 +14,7 @@ class Scene {
   Scene::Scene(int w, int h);
 
 
-  std::vector<Sphere> objets;
+  std::vector<std::shared_ptr<HittableObject3D>> objets;
   Screen screen;
   Vector3 lumiere;
 

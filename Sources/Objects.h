@@ -2,24 +2,21 @@
 
 #define OBJECTS_H
 
-#include "Vector3.h"
+#include <variant>
+
 #include "Color.h"
+#include "Ray.h"
+#include "Vector3.h"
 
-
-class Sphere {
+class Object3D {
  public:
-  Sphere(Vector3 center, double radius, Color color);
-
   Vector3 center;
-  Color color;
-  double radius;
 
-  Vector3 Sphere::normal(Vector3 point);
-
- private:
+  Object3D::Object3D();
+  Object3D::Object3D(Vector3 center);
 };
 
-class Screen {
+class Screen : public Object3D {
  public:
   Screen::Screen();
   Screen::Screen(int width, int height, Vector3 pos);
@@ -30,11 +27,40 @@ class Screen {
 
   Vector3 pixelDirectionFromOrigin(int x, int y);
 
-  
  private:
   int width;
   int height;
-  Vector3 pos;
 };
+
+class HittableObject3D : public Object3D {
+ public:
+  virtual double make_intersect(Ray *ray);
+  virtual Vector3 normal(Vector3 point);
+  Color color;
+  HittableObject3D(Vector3 center);
+  HittableObject3D(Vector3 center, Color color);
+  HittableObject3D();
+};
+
+class Sphere : public HittableObject3D {
+ public:
+  Sphere(Vector3 center, double radius, Color color);
+
+  double radius;
+
+  Vector3 normal(Vector3 point) override;
+  double make_intersect(Ray *ray) override;
+};
+
+class Plane : public HittableObject3D {
+ public:
+  Plane::Plane();
+  Plane::Plane(Vector3 normal, Vector3 center, Color color);
+  Vector3 norm;
+  double make_intersect(Ray *ray) override;
+  Vector3 normal(Vector3 point) override;
+};
+
+// using Object = std::variant<Sphere, Plane>;
 
 #endif  // OBJECTS_H
