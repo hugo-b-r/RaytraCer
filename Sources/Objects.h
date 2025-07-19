@@ -12,14 +12,14 @@ class Object3D {
  public:
   Vector3 center;
 
-  Object3D::Object3D();
-  Object3D::Object3D(Vector3 center);
+  Object3D();
+  Object3D(Vector3 center);
 };
 
 class Screen : public Object3D {
  public:
-  Screen::Screen();
-  Screen::Screen(int width, int height, Vector3 pos);
+  Screen();
+  Screen(int width, int height, Vector3 pos);
 
   int getWidth();
   int getHeight();
@@ -54,8 +54,8 @@ class Sphere : public HittableObject3D {
 
 class Plane : public HittableObject3D {
  public:
-  Plane::Plane();
-  Plane::Plane(Vector3 normal, Vector3 center, Color color);
+  Plane();
+  Plane(Vector3 normal, Vector3 center, Color color);
   Vector3 norm;
   double make_intersect(Ray *ray) override;
   Vector3 normal(Vector3 point) override;

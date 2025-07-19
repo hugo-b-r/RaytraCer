@@ -11,7 +11,7 @@
 class Scene {
  public:
   Scene();
-  Scene::Scene(int w, int h);
+  Scene(int w, int h);
 
 
   std::vector<std::shared_ptr<HittableObject3D>> objets;
@@ -21,7 +21,7 @@ class Scene {
 
   int pixel_color(int x, int y, SDL_PixelFormatDetails format);
 
-  std::vector<int> coloration(SDL_PixelFormatDetails format); 
+  std::vector<int> coloration(SDL_PixelFormatDetails format);
 };
 
 #endif  // SCENE_H
