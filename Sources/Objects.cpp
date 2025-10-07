@@ -1,6 +1,7 @@
 #include "Objects.h"
 
 #include <iostream>
+#include <cmath>
 
 Object3D::Object3D() : center(Vector3(0, 0, 0)) {}
 
