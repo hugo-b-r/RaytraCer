@@ -60,3 +60,4 @@ RealWindow::~RealWindow() {
   SDL_Quit();
   std::cout << "Exited !" << std::endl;
 }
+
